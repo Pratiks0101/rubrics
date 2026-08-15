@@ -1,6 +1,12 @@
 gsap.registerPlugin(ScrollTrigger);
 
+const baseURL = "https://api.counterapi.dev/v2"
+const siteID = "rubrics-in"
+const lastUpdated = document.getElementById('last-updated')
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Hamburger icon
     const menuBtn = document.getElementById("menu-btn")
     const menuIcon = document.getElementById("menu-icon")
     const menuLinks = document.getElementById("menu-links")
@@ -28,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
-
+    // GSAP
     document.querySelectorAll('.counter').forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target'))
         let countObject = { val: 0 }
@@ -49,4 +55,51 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } )
     })
-})
+
+    // Visitor Counter
+    fetch(`${baseURL}/${siteID}/up`)
+        .then(res => res.json())
+        .then(data => {
+            const countEl = document.getElementById('visitor-count')
+            const count = data.count || data.value || data.data?.count
+
+            if (countEl && count !== undefined){
+                countEl.setAttribute('data-target', count)
+                animateVisitorCount(countEl, count)
+            }
+        })
+        .catch (err => console.log("Error fetching count:", err))
+
+    
+    function animateVisitorCount(element, target) {
+        let countObject = { val: 0}
+
+        gsap.to(countObject, {
+            val: target,
+            duration: 2,
+            ease: "power2.out",
+            onUpdate: () => {
+                element.textContent = Math.floor(countObject.val)
+            }
+        })
+    }
+
+    // Last Update
+    if(lastUpdated) {
+        const lastModifiedDate = new Date(document.lastModified)
+
+        const formattedDate = lastModifiedDate.toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        })
+
+        const formattedTime = lastModifiedDate.toLocaleTimeString('en-IN', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        })
+
+        lastUpdated.textContent = `${formattedDate} at ${formattedTime}`
+    }
+}) 
