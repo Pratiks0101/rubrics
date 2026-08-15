@@ -61,8 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(res => res.json())
         .then(data => {
             console.log("CounterAPI Response: ", data)
-            
-            const count = data.up ?? data.count ?? data.value ?? data.data?.count ?? data.data?.up
+            const count = resData.data?.up_count ?? resData.data?.count ?? resData.data?.value ?? resData.up_count;
 
             if (countEl && count !== undefined && count !== null){
                 countEl.setAttribute('data-target', count)
