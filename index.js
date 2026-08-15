@@ -2,6 +2,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const baseURL = "https://api.counterapi.dev/v2"
 const siteID = "rubrics-in"
+const countEl = document.getElementById('visitor-count')
 const lastUpdated = document.getElementById('last-updated')
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -60,12 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`${baseURL}/${siteID}/up`)
         .then(res => res.json())
         .then(data => {
-            const countEl = document.getElementById('visitor-count')
-            const count = data.count || data.value || data.data?.count
+            console.log("CounterAPI Response: ", data)
+            
+            const count = data.up ?? data.count ?? data.value ?? data.data?.count ?? data.data?.up
 
-            if (countEl && count !== undefined){
+            if (countEl && count !== undefined && count !== null){
                 countEl.setAttribute('data-target', count)
-                animateVisitorCount(countEl, count)
+                animateVisitorCount(countEl, Number(count))
             }
         })
         .catch (err => console.log("Error fetching count:", err))
