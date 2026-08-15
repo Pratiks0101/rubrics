@@ -59,10 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // Visitor Counter
-    fetch(`${baseURL}?t=${Date.now()}`,{
-        cache: 'no-store',
-        headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
-    })
+    fetch(`${baseURL}?t=${Date.now()}`)
         .then(res => res.json())
         .then(data => {
             console.log("CounterAPI Response: ", data)
@@ -74,9 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch (err => console.log("Error fetching count:", err))
-        const fallbackTarget = parseInt(countEl.getAttribute('data-target')) || 0
-        animateVisitorCount(countEl, fallbackTarget)
-
     
     function animateVisitorCount(element, target) {
         let countObject = { val: 0}
