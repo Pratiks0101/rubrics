@@ -1,10 +1,12 @@
 gsap.registerPlugin(ScrollTrigger);
 
 const baseURL = "https://api.counterapi.dev/v2/rubrics-softcon-pvt-ltds-team-5108/first-visitors/up"
-const countEl = document.getElementById('visitor-count')
-const lastUpdated = document.getElementById('last-updated')
+
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    const countEl = document.getElementById('visitor-count')
+    const lastUpdated = document.getElementById('last-updated')
 
     // Hamburger icon
     const menuBtn = document.getElementById("menu-btn")
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const individualLink = menuLinks.querySelectorAll('a')
         individualLink.forEach(link => {
             link.addEventListener('click', () => {
-                if(window.innerWidth < 786){
+                if(window.innerWidth < 768){
                     menuLinks.classList.add('hidden')
                     menuLinks.classList.remove('flex')
                     menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16')
@@ -57,7 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // Visitor Counter
-    fetch(`${baseURL}`)
+    fetch(`${baseURL}?t=${Date.now()}`,{
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+    })
         .then(res => res.json())
         .then(data => {
             console.log("CounterAPI Response: ", data)
@@ -69,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch (err => console.log("Error fetching count:", err))
+        const fallbackTarget = parseInt(countEl.getAttribute('data-target')) || 0
+        animateVisitorCount(countEl, fallbackTarget)
 
     
     function animateVisitorCount(element, target) {
