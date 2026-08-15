@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // Visitor Counter
-    fetch(`${baseURL}/${siteID}/up`)
+    fetch(`${baseURL}`)
         .then(res => res.json())
         .then(data => {
             console.log("CounterAPI Response: ", data)
