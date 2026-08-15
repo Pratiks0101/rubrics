@@ -1,7 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 
-const baseURL = "https://api.counterapi.dev/v2"
-const siteID = "rubrics-in"
+const baseURL = "https://api.counterapi.dev/v2/rubrics-softcon-pvt-ltds-team-5108/first-visitors/up"
 const countEl = document.getElementById('visitor-count')
 const lastUpdated = document.getElementById('last-updated')
 
