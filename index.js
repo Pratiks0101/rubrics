@@ -1,3 +1,5 @@
+gsap.registerPlugin(ScrollTrigger);
+
 document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById("menu-btn")
     const menuIcon = document.getElementById("menu-icon")
@@ -26,4 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
+
+    document.querySelectorAll('.counter').forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'))
+        let countObject = { val: 0 }
+
+        gsap.to(countObject, {
+            val: target,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: counter,
+                scroller: "body",
+                start: "top 90%",
+                once: true
+            },
+
+            onUpdate: () => {
+                counter.textContent = Math.floor(countObject.val)
+            }
+        } )
+    })
 })

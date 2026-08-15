@@ -11,12 +11,14 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="images/site.webmanifest">
 
 
     <link rel="stylesheet" href="./dist/output.css">
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>Rubrics SoftCon | Accreditation, Ranking & Quality Excellence</title>
 
@@ -189,12 +191,16 @@
 
                     <div class="pt-6 border-t border-slate-100 flex items-center gap-6">
                         <div>
-                            <span class="text-4xl font-extrabold text-blue-600 block">500+</span>
+                            <span class="text-4xl font-extrabold text-blue-600 block">
+                                <span class="counter" data-target="500">0</span>+
+                            </span>
                             <span class="text-sm font-semibold text-slate-500 uppercase tracking-wide">Oraganizations Trustes Us</span>
                         </div>
                         <div class="h-10 w-px bg-slate-200"></div>
                         <div>
-                            <span class="text-4xl font-extrabold text-emerald-600 block">100%</span>
+                            <span class="text-4xl font-extrabold text-emerald-600 block">
+                                <span class="counter" data-target="100">0</span>%
+                            </span>
                             <span class="text-sm font-semibold text-slate-500 uppercase tracking-wide">Quality Driven</span>
                         </div>
                     </div>
@@ -467,7 +473,7 @@
                     <div class="pt-6 border-t border-slate-800 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-slate-400">
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                            <span>500+ Trusted Organizations</span>
+                            <span><span class="counter" data-target="500">0</span>+ Trusted Organizations</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-blue-500"></span>
@@ -584,6 +590,8 @@
 </svg>
 </a>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="module" src="index.js"></script>
 </body>
 </html>
