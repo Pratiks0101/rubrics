@@ -58,6 +58,39 @@ document.addEventListener('DOMContentLoaded', () => {
         } )
     })
 
+    if(countEl){
+        let apiTargetCount = null
+        let hasScrolledToFooter = false
+        let hasAnimated = false
+
+    function animateVisitorCount(finalValue) {
+        if(hasAnimated) return
+        hasAnimated = true
+
+        let countObject = { val: 0 }
+        gsap.to(countObject, {
+            val: finalValue,
+            duration: 2,
+            ease: "power2.out",
+            onUpdate: () => {
+                countEl.textContent = Math.floor(countObject.val)
+            }
+        })
+    }
+
+    ScrollTrigger.create({
+        trigger: countEl,
+        scroller: 'body',
+        start: 'top 90%',
+        once: true,
+        onEnter: () => {
+            hasScrolledToFooter = true;
+            if(apiTargetCount !== null){
+                animateVisitorCount(apiTargetCount)
+            }
+        }
+    })
+
     // Visitor Counter
     fetch(`${baseURL}?t=${Date.now()}`)
         .then(res => res.json())
@@ -65,24 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("CounterAPI Response: ", data)
             const count = data.data?.up_count ?? data.data?.count ?? data.data?.value ?? data.up_count;
 
-            if (countEl && count !== undefined && count !== null){
-                countEl.setAttribute('data-target', count)
-                animateVisitorCount(countEl, Number(count))
+            if (count !== undefined && count !== null){
+                apiTargetCount = Number(count)
+                
+                if(hasScrolledToFooter){
+                    animateVisitorCount(apiTargetCount)
+                }
             }
         })
         .catch (err => console.log("Error fetching count:", err))
-    
-    function animateVisitorCount(element, target) {
-        let countObject = { val: 0}
-
-        gsap.to(countObject, {
-            val: target,
-            duration: 2,
-            ease: "power2.out",
-            onUpdate: () => {
-                element.textContent = Math.floor(countObject.val)
-            }
-        })
     }
 
     // Last Update
