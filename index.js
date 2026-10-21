@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
     // GSAP
-    document.querySelectorAll('.counter').forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'))
+    document.querySelectorAll('.counter:not(#visitor-count)').forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target')) || 0
         let countObject = { val: 0 }
 
         gsap.to(countObject, {
@@ -98,15 +98,25 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("CounterAPI Response: ", data)
             const count = data.data?.up_count ?? data.data?.count ?? data.data?.value ?? data.up_count;
 
-            if (count !== undefined && count !== null){
+            if (count !== undefined && count !== null && !isNaN(Number(count))){
                 apiTargetCount = Number(count)
                 
                 if(hasScrolledToFooter){
                     animateVisitorCount(apiTargetCount)
                 }
+            } else {
+                throw new Error("Invalid count response")
             }
         })
-        .catch (err => console.log("Error fetching count:", err))
+        .catch(err => {
+                console.warn("CounterAPI fetch failed or blocked (e.g. Brave Shields):", err);
+                const fallbackTarget = Number(countEl.getAttribute('data-target')) || 100;
+                apiTargetCount = fallbackTarget;
+
+                if (hasScrolledToFooter) {
+                    animateVisitorCount(apiTargetCount);
+                }
+            })
     }
 
     // Last Update
